@@ -1,0 +1,22 @@
+version: '3'
+
+volumes:
+  mysql_apicurio:
+
+services:
+  apicurio-studio-db:
+    image: 'percona:5.7'
+    command: [
+      '--character-set-server=utf8mb4',
+      '--collation-server=utf8mb4_unicode_ci'
+    ]
+    ports:
+      - '3306:3306'
+    environment:
+      MYSQL_DATABASE: apicuriodb
+      MYSQL_ROOT_PASSWORD: apicurio
+      MYSQL_USER: apicurio
+      MYSQL_PASSWORD: apicurio
+    volumes:
+      - 'mysql_apicurio:/var/lib/mysql'
+

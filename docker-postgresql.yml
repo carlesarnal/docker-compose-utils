@@ -1,0 +1,17 @@
+version: '3'
+
+volumes:
+  postgre_apicurio:
+
+services:
+  apicurio-studio-db:
+    ports:
+      - '5432:5432'
+    image: 'postgres:9.6'    
+    environment:
+      POSTGRES_DB: apicuriodb
+      POSTGRES_USER: apicurio
+      POSTGRES_PASSWORD: apicurio
+    volumes:
+      - 'postgre_apicurio:/var/lib/postgresql/data'
+
