@@ -9,9 +9,9 @@ services:
       - '5432:5432'
     image: 'postgres:9.6'    
     environment:
-      POSTGRES_DB: apicuriodb
-      POSTGRES_USER: apicurio
-      POSTGRES_PASSWORD: apicurio
+      POSTGRES_DB: registry
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
     volumes:
       - 'postgre_apicurio:/var/lib/postgresql/data'
 
