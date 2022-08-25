@@ -1,0 +1,34 @@
+version: "3"
+
+volumes:
+  postgre_apicurio:
+
+services:
+  apicurio-db:
+     ports:
+       - '5432:5432'
+     image: 'postgres:9.6'
+     environment:
+       POSTGRES_DB: apicuriodb
+       POSTGRES_USER: postgres
+       POSTGRES_PASSWORD: postgres
+     volumes:
+       - 'postgre_apicurio:/var/lib/postgresql/data'
+
+  registry:
+    depends_on:
+      - apicurio-db
+    container_name: registry
+    image: quay.io/apicurio/apicurio-registry-sql-native:latest-snapshot
+    restart: always
+    ports:
+      - "8080:8080"
+    environment:
+      JAVA_TOOL_OPTIONS: '-Djava.net.preferIPv4Stack=true'
+      REGISTRY_DATASOURCE_URL: 'jdbc:postgresql://apicurio-db:5432/apicuriodb'
+      REGISTRY_DATASOURCE_PASSWORD: 'postgres'
+      REGISTRY_DATASOURCE_USERNAME: 'postgres'
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+      - "172.17.0.1:host-gateway"
+
